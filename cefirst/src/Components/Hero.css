@@ -1,0 +1,67 @@
+.hero{
+    display: flex;
+    padding: 30px 100px;
+    background: #3b5d50;
+}
+.left-hero{
+    background: #3b5d50;
+    max-width: 438px;
+    padding-top: 48px;
+}
+.hero-heading{
+    font-size: 55px;
+    font-weight: 900;
+    background: #3b5d50;
+    width: 425px;
+    color: white !important;
+}
+.hero-para-1{
+    background: #3b5d50;
+    color: rgba(255, 255, 255, 0.5);
+    padding-top: 35px;
+    line-height: 25px;
+    font-size: 0.85rem;
+}
+.hero-btns{
+    background: #3b5d50;
+    padding-top: 20px;
+}
+.shop-now-btn{
+    border: none;
+    width: 125px;
+    height: 40px;
+    border-radius: 25px;
+    color: black;
+    background-color: #f9bf29;
+    font-weight: 600;
+    font-size: 15px;
+}
+.explore-now-btn{
+    border: 3px solid #708980;
+    width: 135px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: #3b5d50;
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 15px;
+
+}
+.right-hero{
+    background: #3b5d50 ;
+    margin-left: 300px;
+}
+.couch-img{
+    background: #3b5d50 ;
+    width: 610px;
+    position: relative;
+    z-index: 2;
+}
+.dots-light{
+    background: #3b5d50 ;
+    position: absolute;
+    z-index: 1;
+    top: 120px;
+    right: 30px;
+}

@@ -1,0 +1,242 @@
+/* Global Styles */ 
+body { 
+  font-family: 'Arial', sans-serif; 
+  background-color: #f4f7fa; 
+  color: #333; 
+  margin: 0; 
+  padding: 0; 
+} 
+ 
+.cart-container { 
+  max-width: 1200px; 
+  margin: 40px auto; 
+  padding: 20px; 
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+} 
+ 
+h2 { 
+  font-size: 2rem; 
+  color: #333; 
+  margin-bottom: 20px; 
+  text-align: center; 
+} 
+ 
+h3 { 
+  font-size: 1.6rem; 
+  color: #333; 
+  margin-bottom: 10px; 
+} 
+ 
+/* Cart Item Section */ 
+.cart-items { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+} 
+ 
+.cart-item { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 15px; 
+  border-radius: 10px; 
+  background-color: #fafafa; 
+  border: 1px solid #e0e0e0; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.2s ease; 
+} 
+ 
+.cart-item:hover { 
+  transform: scale(1.02); 
+} 
+ 
+.cart-item-image { 
+  width: 100px; 
+  height: 100px; 
+  object-fit: cover; 
+  border-radius: 8px; 
+  margin-right: 20px; 
+} 
+ 
+.cart-item-details { 
+  flex-grow: 1; 
+} 
+ 
+.cart-item-actions { 
+  display: flex; 
+  gap: 12px; 
+  align-items: center; 
+} 
+ 
+.cart-action-btn { 
+  padding: 8px 15px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  transition: background-color 0.3s ease; 
+} 
+ 
+.cart-action-btn:hover { 
+  background-color: #0056b3; 
+} 
+ 
+/* Delivery Section */ 
+.delivery-container { 
+  margin-top: 20px; 
+  background-color: #f8f9fa; 
+  padding: 15px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); 
+} 
+ 
+.delivery-container input { 
+  padding: 10px; 
+  font-size: 16px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  width: 100%; 
+  margin-top: 10px; 
+  transition: border-color 0.3s ease; 
+} 
+ 
+.delivery-container input:focus { 
+  border-color: #007bff; 
+  outline: none; 
+} 
+ 
+.pin-check-btn { 
+  padding: 10px 15px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  margin-top: 10px; 
+} 
+ 
+.pin-check-btn:hover { 
+  background-color: #0056b3; 
+} 
+ 
+.delivery-message { 
+  margin-top: 10px; 
+  font-size: 14px; 
+  color: #28a745; 
+} 
+ 
+/* Customization Section */ 
+.customization-container { 
+  margin-top: 20px; 
+} 
+ 
+.customization-container label { 
+  font-size: 16px; 
+  color: #333; 
+} 
+ 
+.customization-container textarea { 
+  width: 100%; 
+  height: 100px; 
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  font-size: 16px; 
+  resize: vertical; 
+  margin-top: 10px; 
+  transition: border-color 0.3s ease; 
+} 
+ 
+.customization-container textarea:focus { 
+  border-color: #007bff; 
+  outline: none; 
+} 
+ 
+/* Cart and Payment Details */ 
+.cart-details, 
+.payment-details { 
+  background-color: #f8f9fa; 
+  border-radius: 10px; 
+  padding: 20px; 
+  margin-top: 30px; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); 
+} 
+ 
+.cart-details p, 
+.payment-details p { 
+  font-size: 1.1rem; 
+  margin-bottom: 10px; 
+} 
+ 
+.payment-details { 
+  border-top: 2px solid #e0e0e0; 
+  margin-top: 30px; 
+} 
+ 
+.payment-details p { 
+  color: #007bff; 
+} 
+ 
+/* Address and Order Buttons */ 
+.address-container { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+} 
+ 
+.add-address-btn, 
+.place-order-btn { 
+  display: inline-block; 
+  padding: 12px 25px; 
+  background-color: #28a745; 
+  color: white; 
+  border: none; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  width: 100%; 
+  transition: background-color 0.3s ease; 
+} 
+ 
+.add-address-btn:hover, 
+.place-order-btn:hover { 
+  background-color: #218838; 
+} 
+ 
+/* Responsive Layout */ 
+@media (max-width: 768px) { 
+  .cart-item { 
+    flex-direction: column; 
+    align-items: flex-start; 
+  } 
+ 
+  .cart-item-actions { 
+    justify-content: flex-start; 
+    gap: 8px; 
+  } 
+ 
+  .cart-details, 
+  .payment-details { 
+    padding: 15px; 
+  } 
+ 
+  .total-btn, 
+  .place-order-btn, 
+  .navigate-to-address-btn { 
+    padding: 12px; 
+    font-size: 14px; 
+  }
+  .customization-container textarea { 
+    height: 80px; 
+  } 
+ 
+  .cart-item-image { 
+    width: 80px; 
+    height: 80px; 
+  } 
+}
