@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Cart.css";
@@ -9,8 +9,8 @@ function CartPage() {
   const [total, setTotal] = useState(0);
   const [deliveryMessage, setDeliveryMessage] = useState("");
   const [address, setAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [hasAddress, setHasAddress] = useState(false);
+  // const [paymentMethod, setPaymentMethod] = useState("");
+  // const [hasAddress, setHasAddress] = useState(false);
   const [customization, setCustomization] = useState(""); // State for customization text
   const navigate = useNavigate();
 
@@ -23,12 +23,14 @@ function CartPage() {
           navigate("/login");
           return;
         }
-        
-        const response = await axios.get("http://localhost:5000/api/v1/get-cart", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/get-cart",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (response.data) {
-          
           setCartItems(response.data.items); // Update cart items from the response
         }
       } catch (error) {
@@ -54,7 +56,11 @@ function CartPage() {
     }
 
     let productTotal = cartItems.reduce((acc, item) => {
-      const priceString = (typeof item.price === 'string' ? item.price : item.price.toString()).replace("₹", "").replace(",", "");
+      const priceString = (
+        typeof item.price === "string" ? item.price : item.price.toString()
+      )
+        .replace("₹", "")
+        .replace(",", "");
       const price = parseFloat(priceString);
       return isNaN(price) ? acc : acc + price * item.quantity;
     }, 0);
@@ -70,9 +76,13 @@ function CartPage() {
 
   const handlePinCodeCheck = () => {
     if (pinCode.match(/^\d{6}$/)) {
-      setDeliveryMessage("Delivery available at ${pinCode}. Estimated delivery: 3-5 days.");
+      setDeliveryMessage(
+        "Delivery available at ${pinCode}. Estimated delivery: 3-5 days."
+      );
     } else {
-      setDeliveryMessage("Invalid Pin Code. Please enter a valid 6-digit code.");
+      setDeliveryMessage(
+        "Invalid Pin Code. Please enter a valid 6-digit code."
+      );
     }
   };
 
@@ -80,74 +90,85 @@ function CartPage() {
     navigate("/address", { state: { setAddress: "setAddress" } });
   };
 
-  // const handlePlaceOrder = async () => {
-  //   // Check if the cart is empty
-  //   if (cartItems.length === 0) {
-  //     alert("Your cart is empty. Please add items to the cart before placing the order.");
-  //     return;
-  //   }
-  
-  //   // Check if address is not set
-  //   if (!address) {
-  //     alert("Please add an address before placing the order.");
-  //     navigate("/address");
-  //     return;
-  //   }
-  
-  //   // Check if payment method is selected
-  //   if (!paymentMethod) {
-  //     alert("Please select a payment method.");
-  //     return;
-  //   }
-  
-  //   // Retrieve email from localStorage as the user ID
-  //   const email = localStorage.getItem("email");
-  //   if (!email) {
-  //     alert("You are not logged in. Please log in to place an order.");
-  //     navigate("/login");
-  //     return;
-  //   }
-  
-  //   // Prepare order details for the API
-  //   const orderDetails = {
-  //     userId: email,
-  //     address: address,
-  //     items: cartItems.map((item) => ({
-  //       productId: item.productId,
-  //       quantity: item.quantity,
-  //       price: item.price,
-  //       customization: customization,
-  //     })),
-  //   };
-  
-  //   localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-  
-  //   try {
-  //     const response = await axios.post("http://localhost:5000/api/v1/create-order", orderDetails, {
-  //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  //     });
-  
-  //     if (response.status === 201) {
-  //       alert("Order placed successfully!");
-  //       // Remove items from localStorage and clear cartItems state
-  //       localStorage.removeItem("cartItems"); // Remove cart items from localStorage
-  //       setCartItems([]);
-  //       navigate("/order-placed");
-  //     } else {
-  //       alert(response.data.message || "Failed to place the order. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error placing the order:", error);
-  //     alert("An error occurred while placing the order. Please try again.");
-  //   }
-  // };
-  
-  const handleRazorpayPayment = async () => {
+  const handlePlaceOrder = async () => {
+    // Check if the cart is empty
     if (cartItems.length === 0) {
-      alert("Your cart is empty. Please add items to the cart before placing the order.");
+      alert(
+        "Your cart is empty. Please add items to the cart before placing the order."
+      );
       return;
     }
-  
+
+    // Check if address is not set
+    if (!address) {
+      alert("Please add an address before placing the order.");
+      navigate("/address");
+      return;
+    }
+
+    // Check if payment method is selected
+    if (!paymentMethod) {
+      alert("Please select a payment method.");
+      return;
+    }
+
+    // Retrieve email from localStorage as the user ID
+    const email = localStorage.getItem("email");
+    if (!email) {
+      alert("You are not logged in. Please log in to place an order.");
+      navigate("/login");
+      return;
+    }
+
+    // Prepare order details for the API
+    const orderDetails = {
+      userId: email,
+      address: address,
+      items: cartItems.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price,
+        customization: customization,
+      })),
+    };
+
+    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/create-order",
+        orderDetails,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Order placed successfully!");
+        // Remove items from localStorage and clear cartItems state
+        localStorage.removeItem("cartItems"); // Remove cart items from localStorage
+        setCartItems([]);
+        navigate("/order-placed");
+      } else {
+        alert(
+          response.data.message ||
+            "Failed to place the order. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Error placing the order:", error);
+      alert("An error occurred while placing the order. Please try again.");
+    }
+  };
+
+  const handleRazorpayPayment = async () => {
+    if (cartItems.length === 0) {
+      alert(
+        "Your cart is empty. Please add items to the cart before placing the order."
+      );
+      return;
+    }
+
     // Check if address is not set
     if (!address) {
       alert("Please add an address before placing the order.");
@@ -156,18 +177,19 @@ function CartPage() {
     }
 
     const email = localStorage.getItem("email");
-              if (!email) {
-                alert("You are not logged in. Please log in to place an order.");
-                navigate("/login");
-                return;
-              }
-            
-  
+    if (!email) {
+      alert("You are not logged in. Please log in to place an order.");
+      navigate("/login");
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/v1/create-order-razorpay",
         { amount: total },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
 
       const options = {
@@ -182,11 +204,15 @@ function CartPage() {
             const verifyResponse = await axios.post(
               "http://localhost:5000/api/v1/verify-payment",
               response,
-              { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
             );
 
             if (verifyResponse.data.success) {
-                        // Retrieve email from localStorage as the user ID
+              // Retrieve email from localStorage as the user ID
               // Prepare order details for the API
               const orderDetails = {
                 userId: email, // Using email as userId
@@ -196,31 +222,45 @@ function CartPage() {
                   quantity: item.quantity,
                   price: item.price,
                 })),
-                customization:customization
+                customization: customization,
               };
-            
-              localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-            
+
+              localStorage.setItem(
+                "orderDetails",
+                JSON.stringify(orderDetails)
+              );
+
               try {
-                const response = await axios.post("http://localhost:5000/api/v1/create-order", orderDetails, {
-                  headers: { Authorization:`Bearer ${localStorage.getItem("token")}` },
-                });
-            
+                const response = await axios.post(
+                  "http://localhost:5000/api/v1/create-order",
+                  orderDetails,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  }
+                );
+
                 if (response.status === 201) {
                   alert("Payment successful! Your order has been placed.");
                   // Remove items from localStorage and clear cartItems state
                   localStorage.removeItem("cartItems"); // Remove cart items from localStorage
                   for (const item of orderDetails.items) {
                     await removeFromCart(item.productId); // Call removeFromCart for each item
-                  }                  navigate("/order-placed");
+                  }
+                  navigate("/order-placed");
                 } else {
-                  alert(response.data.message || "Failed to place the order. Please try again.");
+                  alert(
+                    response.data.message ||
+                      "Failed to place the order. Please try again."
+                  );
                 }
               } catch (error) {
                 console.error("Error placing the order:", error);
-                alert("An error occurred while placing the order. Please try again.");
-              } 
-            
+                alert(
+                  "An error occurred while placing the order. Please try again."
+                );
+              }
             } else {
               alert("Payment verification failed. Please try again.");
             }
@@ -255,7 +295,9 @@ function CartPage() {
       const response = await axios.post(
         "http://localhost:5000/api/v1/update-cart",
         { productId, quantity },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       if (response.data) {
         setCartItems(response.data.items); // Update cart items from the response
@@ -271,7 +313,9 @@ function CartPage() {
       const response = await axios.post(
         "http://localhost:5000/api/v1/remove-from-cart",
         { productId },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       if (response.data) {
         setCartItems(response.data.items); // Update cart items from the response
@@ -294,20 +338,25 @@ function CartPage() {
               <img
                 src={`/assets/picc1.jpg`}
                 alt={item.name}
-                className="cart-item-image"/>
+                className="cart-item-image"
+              />
               <div className="cart-item-details">
                 <h3>{item.name}</h3>
                 <p>Price: ₹{item.price}</p>
                 <p>Quantity:{item.quantity}</p>
                 <div className="cart-item-actions">
                   <button
-                    onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
+                    onClick={() =>
+                      updateCartQuantity(item.productId, item.quantity + 1)
+                    }
                     className="cart-action-btn"
                   >
                     +
                   </button>
                   <button
-                    onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
+                    onClick={() =>
+                      updateCartQuantity(item.productId, item.quantity - 1)
+                    }
                     className="cart-action-btn"
                   >
                     -
@@ -337,7 +386,9 @@ function CartPage() {
         <button onClick={handlePinCodeCheck} className="pin-check-btn">
           Check
         </button>
-        {deliveryMessage && <p className="delivery-message">{deliveryMessage}</p>}
+        {deliveryMessage && (
+          <p className="delivery-message">{deliveryMessage}</p>
+        )}
       </div>
       <div className="customization-container">
         <label htmlFor="customization">Customization (if any):</label>
@@ -351,7 +402,9 @@ function CartPage() {
       {/* Cart Details */}
       <div className="cart-details">
         <h3>Cart Details</h3>
-        <p>Total Items: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}</p>
+        <p>
+          Total Items: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+        </p>
         <p>Total: ₹{total.toFixed(2)}</p>
       </div>
 
@@ -362,21 +415,18 @@ function CartPage() {
         <p>GST (5%): ₹{(total * 0.05).toFixed(2)}</p>
         <p>Shipping Charge: Free</p>
         <p>Total Amount: ₹{total.toFixed(2)}</p>
-        <p>
-          Or 3 monthly payments of ₹{(total / 3).toFixed(2)}
-        </p>
+        <p>Or 3 monthly payments of ₹{(total / 3).toFixed(2)}</p>
         <p>UPI & Cards Accepted, Online approval in 2 minutes</p>
       </div>
 
-    
       {/* Address and Order Button */}
       <div className="address-container">
-        {/* <button onClick={handleAddressButtonClick} className="add-address-btn">
+        <button onClick={handleAddressButtonClick} className="add-address-btn">
           Add Address
-        </button> */}
-        {/* <button onClick={handleRazorpayPayment} className="place-order-btn">
+        </button>
+        <button onClick={handleRazorpayPayment} className="place-order-btn">
           Pay with Razor Pay
-        </button> */}
+        </button>
       </div>
     </div>
   );

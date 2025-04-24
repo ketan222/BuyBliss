@@ -194,7 +194,7 @@ function Shop({ addToCart }) {
       setLoadingAddToCart(null);
 
       addToCart(product);
-      toast.success(`${product.name} added to cart!`);
+      // toast.success(`${product.name} added to cart!`);
     }, 1000);
   };
 
