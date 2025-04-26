@@ -7,15 +7,15 @@ const transporter = nodemailer.createTransport({
   port: 465, // Use 465 for SSL
   secure: true, // Set to true for port 465
   auth: {
-    user: 'kittysmm0@gmail.com',
-    pass:'lgjo qdgz hotz bgfa',
+    user: `${process.env.MAIL_USER}`,
+    pass:`${process.env.MAIL_PASS}`,
   },
 });
 
 
 const sendMail = async (to, subject, text, html) => {
   const mailOptions = {
-    from:"kittysmm0@gmail.com",
+    from:`${process.env.MAIL_USER}`,
     to,
     subject,
     text,
