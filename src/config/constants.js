@@ -1,7 +1,7 @@
 // API URL for production
 export const API_URL = import.meta.env.PROD
   ? "/api"
-  : "https://buy-bliss-phi.vercel.app/";
+  : "http://buybliss-production.up.railway.app/";
 
 // MongoDB Connection
 export const MONGODB_URI =
