@@ -21,7 +21,7 @@ const orderRoutes = require("./routes/orders");
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:6054", // Frontend URL
+    origin: "https://buy-bliss-three.vercel.app/", // Frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // Allow cookies if needed
   })
