@@ -1,5 +1,5 @@
 // API URL for production
-export const API_URL = "http://buybliss-production.up.railway.app/";
+export const API_URL = "https://buybliss-production.up.railway.app/api/";
 
 // MongoDB Connection
 export const MONGODB_URI =
