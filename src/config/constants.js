@@ -1,7 +1,5 @@
 // API URL for production
-export const API_URL = import.meta.env.PROD
-  ? "/api"
-  : "http://buybliss-production.up.railway.app/";
+export const API_URL = "http://buybliss-production.up.railway.app/";
 
 // MongoDB Connection
 export const MONGODB_URI =
